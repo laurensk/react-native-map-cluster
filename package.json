@@ -1,0 +1,31 @@
+{
+  "name": "wardy-map-cluster",
+  "version": "1.6.0",
+  "description": "Wardy map cluster",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "map",
+    "mapview",
+    "google-maps",
+    "mapkit",
+    "supercluster",
+    "cluster",
+    "clustering"
+  ],
+  "author": "Alberto Dallaporta <alberto.dallaporta@novalab.io> (https://www.linkedin.com/in/ad-novalab/)",
+  "contributors": [
+    "Leonardo Lusoli <leonardo.lusoli@novalab.io> (https://www.linkedin.com/in/leonardolusoli/)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@mapbox/geo-viewport": "^0.4.0",
+    "prop-types": "15.7.2",
+    "supercluster": "^6.0.2"
+  }
+}
