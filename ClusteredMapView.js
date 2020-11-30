@@ -6,7 +6,8 @@ import React, { PureComponent } from 'react'
 import {
   Platform,
   Dimensions,
-  LayoutAnimation
+  LayoutAnimation,
+  PermissionsAndroid
 } from 'react-native'
 // map-related libs
 import MapView from 'react-native-maps'
@@ -20,6 +21,10 @@ import {
   itemToGeoJSONFeature,
   getCoordinatesFromItem,
 } from './util'
+import Geolocation, {
+  GeolocationError,
+  GeolocationResponse,
+} from '@react-native-community/geolocation';
 
 export default class ClusteredMapView extends PureComponent {
 
@@ -43,12 +48,12 @@ export default class ClusteredMapView extends PureComponent {
     this.clusterize(this.props.data)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data)
       this.clusterize(nextProps.data)
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (!this.isAndroid && this.props.animateClusters && this.clustersChanged(nextState))
       LayoutAnimation.configureNext(this.props.layoutAnimationConf)
   }
@@ -90,13 +95,13 @@ export default class ClusteredMapView extends PureComponent {
   onRegionChangeComplete(region) {
     let data = this.getClusters(region)
     this.setState({ region, data }, () => {
-        this.props.onRegionChangeComplete && this.props.onRegionChangeComplete(region, data)
+      this.props.onRegionChangeComplete && this.props.onRegionChangeComplete(region, data)
     })
   }
 
   getClusters(region) {
     const bbox = regionToBoundingBox(region),
-          viewport = (region.longitudeDelta) >= 40 ? { zoom: this.props.minZoom } : GeoViewport.viewport(bbox, this.dimensions)
+      viewport = (region.longitudeDelta) >= 40 ? { zoom: this.props.minZoom } : GeoViewport.viewport(bbox, this.dimensions)
 
     return this.index.getClusters(bbox, viewport.zoom)
   }
@@ -124,6 +129,54 @@ export default class ClusteredMapView extends PureComponent {
     this.props.onClusterPress && this.props.onClusterPress(cluster.properties.cluster_id, markers)
   }
 
+  scrollToUserLocation = async () => {
+    if (Platform.OS == 'android') {
+      this.checkPermissionsAndroid();
+    } else {
+      this.startScrollingToLocation();
+    }
+  }
+
+  checkPermissionsAndroid = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Standortzugriff',
+          message:
+            'Wardy verwendet deinen ungefähren Standort, um dir Unternehmen in deiner Nähe anzuzeigen.',
+          buttonNeutral: 'Später nachfragen',
+          buttonNegative: 'Nicht erlauben',
+          buttonPositive: 'Erlauben',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        this.startScrollingToLocation();
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  startScrollingToLocation = () => {
+    if (Platform.OS != 'android') Geolocation.requestAuthorization();
+    const success = (position) => {
+      if (!position.coords) return () => { };
+      let region = {
+        latitude: parseFloat(position.coords.latitude),
+        longitude: parseFloat(position.coords.longitude),
+        latitudeDelta: 5,
+        longitudeDelta: 5
+      };
+      this.setState({
+        region: region
+      });
+      this.clusterize(this.props.data)
+    };
+    const error = (error) => { };
+    Geolocation.getCurrentPosition(success, error);
+  };
+
   render() {
     const { style, ...props } = this.props
 
@@ -132,6 +185,11 @@ export default class ClusteredMapView extends PureComponent {
         {...props}
         style={style}
         ref={this.mapRef}
+        showsUserLocation={true}
+        region={this.state.region}
+        onMapReady={() => {
+          this.scrollToUserLocation();
+        }}
         onRegionChangeComplete={this.onRegionChangeComplete}>
         {
           this.props.clusteringEnabled && this.state.data.map((d) => {
