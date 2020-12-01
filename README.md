@@ -1,5 +1,5 @@
 # React Native Map Cluster
-Create clustered map views in React Native with user location, custom marker rendering, custom cluster rendering and custom callout rendering.
+Create clustered map views in React Native with current user location, custom marker rendering, custom cluster rendering and custom callout rendering.
 
 ## Install
 `npm i --save react-native-map-cluster`
