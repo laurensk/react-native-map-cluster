@@ -1,7 +1,7 @@
 {
-  "name": "wardy-map-cluster",
+  "name": "react-native-map-cluster",
   "version": "1.6.0",
-  "description": "Wardy map cluster",
+  "description": "Clustered map view for React Native",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,11 +18,12 @@
     "cluster",
     "clustering"
   ],
-  "author": "Alberto Dallaporta <alberto.dallaporta@novalab.io> (https://www.linkedin.com/in/ad-novalab/)",
-  "contributors": [
-    "Leonardo Lusoli <leonardo.lusoli@novalab.io> (https://www.linkedin.com/in/leonardolusoli/)"
-  ],
+  "author": "Laurens K. <hello@laurensk.at>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laurensk/react-native-map-cluster.git"
+  },
   "dependencies": {
     "@mapbox/geo-viewport": "^0.4.0",
     "@react-native-community/geolocation": "^2.0.2",
