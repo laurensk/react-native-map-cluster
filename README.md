@@ -1,19 +1,8 @@
-# React Native Super Cluster
-This module wraps [AirBnB's react-native-maps](https://github.com/airbnb/react-native-maps) and uses [MapBox's SuperCluster](https://github.com/mapbox/supercluster) as clustering engine.
-
-## Example
-
-[See the showcase application](https://github.com/novalabio/react-native-maps-super-cluster-example).
-
-<center>
-<img src="https://github.com/novalabio/react-native-maps-super-cluster-example/blob/master/assets/demo.gif?raw=true" width="240">
-</center>
-
-## Rationale
-This module wants to provide a stable and performing solution for maps clustering in React Native. In particular, our efforts are focused on integrating SuperCluster methods into React's state/lifecycle events, ensuring stability, compatibility and great performance.
+# React Native Map Cluster
+Create clustered map views in React Native with user location, custom marker rendering, custom cluster rendering and custom callout rendering.
 
 ## Install
-`npm i --save react-native-maps-super-cluster`
+`npm i --save react-native-map-cluster`
 
 ## Usage
 
@@ -128,34 +117,6 @@ accessor | String\|Func | true | "location" | Accessor for item coordinate value
 getMapRef | none | Getter for underlying react-native-maps instance | [Official Doc](https://github.com/react-community/react-native-maps#component-api)
 getClusteringEngine | none | Getter for underlying SuperCluster instance | [Official Doc](https://github.com/mapbox/supercluster)
 
-## Production usage
-If you are using this module in a production application, please submit a PR or contact us to add it here.
-* [Varee on Google Play](https://play.google.com/store/apps/details?id=com.vareemobile)
-* [Varee on App Store](https://itunes.apple.com/us/app/varee/id1330151010?mt=8)
-* [Our Voice USA on Google Play](https://play.google.com/store/apps/details?id=org.ourvoiceinitiative.ourvoice)
-* [Our Voice USA on App Store](https://itunes.apple.com/us/app/our-voice-usa/id1275301651?ls=1&mt=8)
-* [Metropolíque on Google Play](https://play.google.com/store/apps/details?id=com.metropolique.app)
-* [Metropolíque on App Store](https://itunes.apple.com/us/app/metropolique/id1314473652?ls=1&mt=8)
-* [Outside - Post and do tasks! on Google Play](https://play.google.com/store/apps/details?id=com.outsideapp)
-* [Outside - Post and do tasks! on App Store](https://itunes.apple.com/us/app/outside-post-and-do-tasks/id1444603208?ls=1&mt=8)
-* [Luceverde - ACI Infomobilità on Google Play](https://play.google.com/store/apps/details?id=it.aci.luceverde.client.mobileapp)
-* [Luceverde - ACI Infomobilità on App Store](https://itunes.apple.com/it/app/luceverde/id1357722780?l=en&mt=8)
-* [Own The Spot on Google Play](https://play.google.com/store/apps/details?id=com.ownthespot)
-* [Own The Spot on App Store](https://itunes.apple.com/us/app/own-the-spot/id1403095767)
+## Credit
 
-## TODO
-
-#### features
-* improve `scaleUpRatio` math for fontSize
-* trigger events on cluster implode/explode
-
-# Support
-As an open source project, we provide free support over Github. However, our daily job may increase response time to days or even weeks. If you need dedicated support, feel free to [contact us](mailto:info@novalab.io) for a quote.
-
-# Contributors
-
-* [Leonardo Lusoli](https://github.com/leolusoli)
-* [Alberto Dallaporta](https://github.com/39otrebla)
-
-# License
-See [our License](https://github.com/novalabio/react-native-maps-super-cluster/blob/master/LICENSE) for more information.
+This repository is a fork of [react-native-maps-super-cluster](https://github.com/novalabio/react-native-maps-super-cluster) with many more features and updated implementations.
