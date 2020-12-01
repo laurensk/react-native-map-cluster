@@ -88,7 +88,7 @@ export default class MyClusteredMapView extends Component {
 }
 ```
 
-## Props
+### Props
 
 **Name** | **Type** | **Required** | **Default** | **Note**
 ---------|----------|--------------|-------------|---------
@@ -111,7 +111,7 @@ layoutAnimationConf | LayoutAnimationConfig | false | `LayoutAnimation.Presets.s
 clusteringEnabled | Bool | false | true | Dynamically set whether to pass through clustering functions or immediately render markers as a normal mapview.
 accessor | String\|Func | true | "location" | Accessor for item coordinate values. Could be a **string** (field name of an item object with latitude and longitude values) or a **function** (that describes how to access to coordinate data).
 
-## Methods
+### Methods
 **Name** | **Params** | **Description** | **Note**
 ---------|------------|-----------------|---------
 getMapRef | none | Getter for underlying react-native-maps instance | [Official Doc](https://github.com/react-community/react-native-maps#component-api)
