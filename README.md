@@ -15,7 +15,7 @@ Create clustered map views in React Native with current user location, custom ma
 ```JSX
 import React, { Component } from 'react'
 import { Marker, Callout } from 'react-native-maps'
-import ClusteredMapView from 'react-native-maps-super-cluster'
+import ClusteredMapView from 'react-native-map-cluster'
 
 const INIT_REGION = {
   latitude: 41.8962667,
@@ -25,20 +25,12 @@ const INIT_REGION = {
 }
 
 export default class MyClusteredMapView extends Component {
-  
-  ...
 
   renderCluster = (cluster, onPress) => {
     const pointCount = cluster.pointCount,
           coordinate = cluster.coordinate,
           clusterId = cluster.clusterId
 
-    // use pointCount to calculate cluster size scaling
-    // and apply it to "style" prop below
-
-    // eventually get clustered points by using
-    // underlying SuperCluster instance
-    // Methods ref: https://github.com/mapbox/supercluster
     const clusteringEngine = this.map.getClusteringEngine(),
           clusteredPoints = clusteringEngine.getLeaves(clusterId, 100)
 
@@ -62,8 +54,6 @@ export default class MyClusteredMapView extends Component {
                 }
               </ScrollView>
             </Callout>
-
-            IMPORTANT: be aware that Marker's onPress event isn't really consistent when using Callout.
            */
         }
       </Marker>
@@ -71,8 +61,6 @@ export default class MyClusteredMapView extends Component {
   }
 
   renderMarker = (data) => <Marker key={data.id || Math.random()} coordinate={data.location} />
-
-  ...
 
   render() {
     return (
