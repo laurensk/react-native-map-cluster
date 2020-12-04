@@ -165,8 +165,8 @@ export default class ClusteredMapView extends PureComponent {
       let region = {
         latitude: parseFloat(position.coords.latitude),
         longitude: parseFloat(position.coords.longitude),
-        latitudeDelta: 5,
-        longitudeDelta: 5
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.1
       };
       this.setState({
         region: region
