@@ -80,6 +80,8 @@ export default class MyClusteredMapView extends Component {
 
 **Name** | **Type** | **Required** | **Default** | **Note**
 ---------|----------|--------------|-------------|---------
+showsUserLocation | Bool | false | undefined | Show current location on map.
+permissionsAndroid | Object | false | undefined | Needed when `showsUserLocation` is set to true. See example [here](https://reactnative.dev/docs/permissionsandroid#request).
 radius | Number | false | window width * 4,5% | [SuperCluster radius](https://github.com/mapbox/supercluster#options).
 extent | Number | false | 512 | [SuperCluster extent](https://github.com/mapbox/supercluster#options).
 minZoom | Number | false | 1 | [SuperCluster minZoom](https://github.com/mapbox/supercluster#options).
@@ -93,11 +95,12 @@ onClusterPress(clusterId, ?children) | Function | false |  | Add (or completey o
 preserveClusterPressBehavior | Bool | false | true | Whether `onClusterPress` prop should completely override module's behavior rather than integrate it.
 clusterPressMaxChildren | Function | false | 100 | Max number of cluster leaves returned as second parameter of `onClusterPress`.
 edgePadding | Object | false | { top: 10, left: 10, bottom: 10, right: 10 } | Edge padding for [react-native-maps's](https://github.com/react-community/react-native-maps/blob/master/docs/mapview.md#methods) `fitToCoordinates` method, called in `onClusterPress` for fitting to pressed cluster children.
-renderMarker | Function | false | undefined | Must return a react-native-maps' Marker component.
+renderMarker | Function | true | undefined | Must return a react-native-maps' Marker component.
+renderCluster | Function | true | undefined | Render the cluster.
 animateClusters | Bool | false | true | Animate imploding/exploding of clusters' markers and clusters size change. **Works only on iOS**.
 layoutAnimationConf | LayoutAnimationConfig | false | `LayoutAnimation.Presets.spring` | Custom Layout animation configuration object for clusters animation during implode / explode **Works only on iOS**.
 clusteringEnabled | Bool | false | true | Dynamically set whether to pass through clustering functions or immediately render markers as a normal mapview.
-accessor | String\|Func | true | "location" | Accessor for item coordinate values. Could be a **string** (field name of an item object with latitude and longitude values) or a **function** (that describes how to access to coordinate data).
+accessor | String\|Func | false | "location" | Accessor for item coordinate values. Could be a **string** (field name of an item object with latitude and longitude values) or a **function** (that describes how to access to coordinate data).
 
 ### Methods
 **Name** | **Params** | **Description** | **Note**
