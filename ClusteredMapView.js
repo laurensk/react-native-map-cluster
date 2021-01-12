@@ -94,7 +94,7 @@ export default class ClusteredMapView extends PureComponent {
 
   timeoutVar;
   onRegionChangeComplete(region) {
-    console.log('test');
+    //console.log('test');
 
     let data = this.getClusters(region)
     // console.log('test');
