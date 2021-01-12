@@ -172,7 +172,7 @@ export default class ClusteredMapView extends PureComponent {
         latitudeDelta: 0.2,
         longitudeDelta: 0.1
       };
-      this.mapRef.animateToRegion(region);
+      this.mapview.animateToRegion(region);
       this.clusterize(this.props.data);
     };
     const error = (_) => { };
