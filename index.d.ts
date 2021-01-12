@@ -4,10 +4,10 @@ interface ClusteredMapViewProps {
   // general props
   style?: object | null;
   data: any[];
-  initialRegion?: object;
+  initialRegion: object;
   ref?: Function | null;
-  renderMarker?: Function;
-  renderCluster?: Function;
+  renderMarker: Function;
+  renderCluster: Function;
   showsUserLocation?: boolean | null;
   permissionsAndroid?: {
     title: string;
