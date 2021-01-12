@@ -3,7 +3,7 @@ import React from "react";
 interface ClusteredMapViewProps {
   // general props
   style?: object | null;
-  data?: any[];
+  data: any[];
   initialRegion?: object;
   ref?: Function | null;
   renderMarker?: Function;
