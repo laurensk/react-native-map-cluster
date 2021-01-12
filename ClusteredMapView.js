@@ -6,8 +6,7 @@ import React, { PureComponent } from 'react'
 import {
   Platform,
   Dimensions,
-  LayoutAnimation,
-  PermissionsAndroid
+  LayoutAnimation
 } from 'react-native'
 // map-related libs
 import MapView from 'react-native-maps'
@@ -92,28 +91,11 @@ export default class ClusteredMapView extends PureComponent {
     return this.state.data.length !== nextState.data.length
   }
 
-  timeoutVar;
   onRegionChangeComplete(region) {
-    //console.log('test');
-
     let data = this.getClusters(region)
-    // console.log('test');
-    if (this.timeoutVar) {
-      // console.log('clear');
-      clearTimeout(this.timeoutVar);
-    }
-    this.timeoutVar = setTimeout(() => {
-      // console.log('go');
-      this.setState({ region, data }, () => {
-        if (this.props.onRegionChangeComplete) {
-          this.props.onRegionChangeComplete(region, data)
-        }
-      });
-    }, 1000);
-
-
-
-
+    this.setState({ region, data }, () => {
+      this.props.onRegionChangeComplete && this.props.onRegionChangeComplete(region, data)
+    })
   }
 
   getClusters(region) {
@@ -146,53 +128,51 @@ export default class ClusteredMapView extends PureComponent {
     this.props.onClusterPress && this.props.onClusterPress(cluster.properties.cluster_id, markers)
   }
 
-  // scrollToUserLocation = async () => {
-  //   if (Platform.OS == 'android') {
-  //     this.checkPermissionsAndroid();
-  //   } else {
-  //     this.startScrollingToLocation();
-  //   }
-  // }
+  scrollToUserLocation = async () => {
+    if (Platform.OS == 'android') {
+      this.checkPermissionsAndroid();
+    } else {
+      this.startScrollingToLocation();
+    }
+  }
 
-  // checkPermissionsAndroid = async () => {
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         title: 'Standortzugriff',
-  //         message:
-  //           'Wardy verwendet deinen ungefähren Standort, um dir Unternehmen in deiner Nähe anzuzeigen.',
-  //         buttonNeutral: 'Später nachfragen',
-  //         buttonNegative: 'Nicht erlauben',
-  //         buttonPositive: 'Erlauben',
-  //       },
-  //     );
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       this.startScrollingToLocation();
-  //     }
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // };
+  checkPermissionsAndroid = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Standortzugriff',
+          message:
+            'Wardy verwendet deinen ungefähren Standort, um dir Unternehmen in deiner Nähe anzuzeigen.',
+          buttonNeutral: 'Später nachfragen',
+          buttonNegative: 'Nicht erlauben',
+          buttonPositive: 'Erlauben',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        this.startScrollingToLocation();
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
-  // startScrollingToLocation = () => {
-  //   if (Platform.OS != 'android') Geolocation.requestAuthorization();
-  //   const success = (position) => {
-  //     if (!position.coords) return () => { };
-  //     let region = {
-  //       latitude: (position.coords.latitude),
-  //       longitude: (position.coords.longitude),
-  //       latitudeDelta: 0.2,
-  //       longitudeDelta: 0.1
-  //     };
-  //     this.setState({
-  //       region: region
-  //     });
-  //     this.clusterize(this.props.data)
-  //   };
-  //   const error = (error) => { };
-  //   Geolocation.getCurrentPosition(success, error);
-  // };
+  startScrollingToLocation = () => {
+    if (Platform.OS != 'android') Geolocation.requestAuthorization();
+    const success = (position) => {
+      if (!position.coords) return () => { };
+      let region = {
+        latitude: (position.coords.latitude),
+        longitude: (position.coords.longitude),
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.1
+      };
+      this.mapRef.animateToRegion(region);
+      this.clusterize(this.props.data);
+    };
+    const error = (_) => { };
+    Geolocation.getCurrentPosition(success, error);
+  };
 
   render() {
     const { style, ...props } = this.props
@@ -201,11 +181,10 @@ export default class ClusteredMapView extends PureComponent {
       <MapView
         {...props}
         style={style}
-        ref={this.mapRef}
-        //showsUserLocation={false}
-        region={this.state.region}
+        showsUserLocation={true}
+        ref={(ref) => this.mapRef = ref}
         onMapReady={() => {
-          //this.scrollToUserLocation();
+          this.scrollToUserLocation();
         }}
         onRegionChangeComplete={this.onRegionChangeComplete}>
         {
