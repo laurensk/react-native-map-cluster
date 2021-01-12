@@ -186,7 +186,7 @@ export default class ClusteredMapView extends PureComponent {
       <MapView
         {...props}
         style={style}
-        ref={(ref) => this.mapRef = ref}
+        ref={this.mapRef = ref}
         onMapReady={() => {
           if (this.props.showsUserLocation)
             this.scrollToUserLocation();
