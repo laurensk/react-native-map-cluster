@@ -1,7 +1,7 @@
 {
   "name": "react-native-map-cluster",
   "version": "1.7.0",
-  "description": "Clustered map view for React Native",
+  "description": "Clustered map view for React Native.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
