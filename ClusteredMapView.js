@@ -137,17 +137,22 @@ export default class ClusteredMapView extends PureComponent {
   }
 
   checkPermissionsAndroid = async () => {
+    let permissionsAndroid = {};
+    if (this.props.permissionsAndroid)
+      permissionsAndroid = this.props.permissionsAndroid;
+    else permissionsAndroid = {
+      title: 'Location',
+      message:
+        'Allow this app to access your location?',
+      buttonNeutral: 'Later',
+      buttonNegative: 'Deny',
+      buttonPositive: 'Allow',
+    };
+
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Standortzugriff',
-          message:
-            'Wardy verwendet deinen ungefähren Standort, um dir Unternehmen in deiner Nähe anzuzeigen.',
-          buttonNeutral: 'Später nachfragen',
-          buttonNegative: 'Nicht erlauben',
-          buttonPositive: 'Erlauben',
-        },
+        permissionsAndroid,
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         this.startScrollingToLocation();
@@ -181,10 +186,10 @@ export default class ClusteredMapView extends PureComponent {
       <MapView
         {...props}
         style={style}
-        showsUserLocation={true}
         ref={(ref) => this.mapRef = ref}
         onMapReady={() => {
-          this.scrollToUserLocation();
+          if (this.props.showsUserLocation)
+            this.scrollToUserLocation();
         }}
         onRegionChangeComplete={this.onRegionChangeComplete}>
         {
