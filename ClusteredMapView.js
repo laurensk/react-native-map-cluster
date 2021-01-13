@@ -6,7 +6,8 @@ import React, { PureComponent } from 'react'
 import {
   Platform,
   Dimensions,
-  LayoutAnimation
+  LayoutAnimation,
+  PermissionsAndroid
 } from 'react-native'
 // map-related libs
 import MapView from 'react-native-maps'
